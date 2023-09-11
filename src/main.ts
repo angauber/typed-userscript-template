@@ -1,5 +1,5 @@
 async function main() {
-	console.log('typed-user-script is running');
+	console.log('hot reload or not ?');
 }
 
 main().catch((e) => { console.log(e); });

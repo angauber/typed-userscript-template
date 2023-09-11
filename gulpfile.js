@@ -1,4 +1,4 @@
-const { dest } = require('gulp');
+const { series, dest, watch } = require('gulp');
 const source = require('vinyl-source-stream');
 const header = require('gulp-header');
 const browserify = require('browserify');
@@ -7,8 +7,9 @@ const babelify = require('babelify');
 const tsify = require("tsify");
 const fs = require("fs");
 const minify = require('gulp-minify');
+const livereload = require('gulp-livereload');
 
-function compileTask() {
+function build() {
     return (
         browserify({
             basedir: ".",
@@ -30,4 +31,11 @@ function compileTask() {
     );
 }
 
-exports.default = compileTask;
+function dev() {
+    livereload.listen();
+
+    watch(['src/*.ts', 'header.txt'], series('build'));
+}
+
+exports.build = build;
+exports.watch = dev;
